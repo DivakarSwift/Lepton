@@ -18,6 +18,15 @@
 		78B1C85A20B148EE00C4BAB5 /* Lepton.h in Headers */ = {isa = PBXBuildFile; fileRef = 78B1C84A20B148ED00C4BAB5 /* Lepton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		78B1C85D20B148EE00C4BAB5 /* Lepton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B1C84820B148ED00C4BAB5 /* Lepton.framework */; };
 		78B1C85E20B148EE00C4BAB5 /* Lepton.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 78B1C84820B148ED00C4BAB5 /* Lepton.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		78B1C86B20B1499B00C4BAB5 /* PlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C86620B1499A00C4BAB5 /* PlayerItem.swift */; };
+		78B1C86C20B1499B00C4BAB5 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C86720B1499B00C4BAB5 /* PlayerView.swift */; };
+		78B1C86D20B1499B00C4BAB5 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C86820B1499B00C4BAB5 /* Player.swift */; };
+		78B1C87120B14A6800C4BAB5 /* Playable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C87020B14A6800C4BAB5 /* Playable.swift */; };
+		78B1C87320B1600E00C4BAB5 /* DisplayLinkProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C87220B1600E00C4BAB5 /* DisplayLinkProxy.swift */; };
+		78B1C87520B1604100C4BAB5 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C87420B1604100C4BAB5 /* Defaults.swift */; };
+		78B1C87720B1690200C4BAB5 /* PlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C87620B1690200C4BAB5 /* PlayerError.swift */; };
+		78B1C87A20B16ECC00C4BAB5 /* 1.M4V in Resources */ = {isa = PBXBuildFile; fileRef = 78B1C87920B16ECC00C4BAB5 /* 1.M4V */; };
+		78B1C87C20B1A26700C4BAB5 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C87B20B1A26700C4BAB5 /* Filter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +91,15 @@
 		78B1C85020B148EE00C4BAB5 /* LeptonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeptonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		78B1C85720B148EE00C4BAB5 /* LeptonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeptonTests.swift; sourceTree = "<group>"; };
 		78B1C85920B148EE00C4BAB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78B1C86620B1499A00C4BAB5 /* PlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerItem.swift; sourceTree = "<group>"; };
+		78B1C86720B1499B00C4BAB5 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		78B1C86820B1499B00C4BAB5 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		78B1C87020B14A6800C4BAB5 /* Playable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playable.swift; sourceTree = "<group>"; };
+		78B1C87220B1600E00C4BAB5 /* DisplayLinkProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayLinkProxy.swift; sourceTree = "<group>"; };
+		78B1C87420B1604100C4BAB5 /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		78B1C87620B1690200C4BAB5 /* PlayerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerError.swift; sourceTree = "<group>"; };
+		78B1C87920B16ECC00C4BAB5 /* 1.M4V */ = {isa = PBXFileReference; lastKnownFileType = file; path = 1.M4V; sourceTree = "<group>"; };
+		78B1C87B20B1A26700C4BAB5 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,8 +161,10 @@
 		78B1C82220B148A800C4BAB5 /* Visual */ = {
 			isa = PBXGroup;
 			children = (
+				78B1C87820B16DBA00C4BAB5 /* Vendors */,
 				78B1C82320B148A800C4BAB5 /* AppDelegate.swift */,
 				78B1C82520B148A800C4BAB5 /* ViewController.swift */,
+				78B1C87B20B1A26700C4BAB5 /* Filter.swift */,
 				78B1C82720B148A800C4BAB5 /* Main.storyboard */,
 				78B1C82A20B148A900C4BAB5 /* Assets.xcassets */,
 				78B1C82C20B148A900C4BAB5 /* LaunchScreen.storyboard */,
@@ -165,6 +185,13 @@
 		78B1C84920B148ED00C4BAB5 /* Lepton */ = {
 			isa = PBXGroup;
 			children = (
+				78B1C87420B1604100C4BAB5 /* Defaults.swift */,
+				78B1C87220B1600E00C4BAB5 /* DisplayLinkProxy.swift */,
+				78B1C86720B1499B00C4BAB5 /* PlayerView.swift */,
+				78B1C87020B14A6800C4BAB5 /* Playable.swift */,
+				78B1C86820B1499B00C4BAB5 /* Player.swift */,
+				78B1C86620B1499A00C4BAB5 /* PlayerItem.swift */,
+				78B1C87620B1690200C4BAB5 /* PlayerError.swift */,
 				78B1C84A20B148ED00C4BAB5 /* Lepton.h */,
 				78B1C84B20B148ED00C4BAB5 /* Info.plist */,
 			);
@@ -178,6 +205,14 @@
 				78B1C85920B148EE00C4BAB5 /* Info.plist */,
 			);
 			path = LeptonTests;
+			sourceTree = "<group>";
+		};
+		78B1C87820B16DBA00C4BAB5 /* Vendors */ = {
+			isa = PBXGroup;
+			children = (
+				78B1C87920B16ECC00C4BAB5 /* 1.M4V */,
+			);
+			path = Vendors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,6 +322,7 @@
 					};
 					78B1C84720B148ED00C4BAB5 = {
 						CreatedOnToolsVersion = 9.3.1;
+						LastSwiftMigration = 0930;
 					};
 					78B1C84F20B148EE00C4BAB5 = {
 						CreatedOnToolsVersion = 9.3.1;
@@ -323,6 +359,7 @@
 				78B1C82E20B148A900C4BAB5 /* LaunchScreen.storyboard in Resources */,
 				78B1C82B20B148A900C4BAB5 /* Assets.xcassets in Resources */,
 				78B1C82920B148A800C4BAB5 /* Main.storyboard in Resources */,
+				78B1C87A20B16ECC00C4BAB5 /* 1.M4V in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +392,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78B1C82620B148A800C4BAB5 /* ViewController.swift in Sources */,
+				78B1C87C20B1A26700C4BAB5 /* Filter.swift in Sources */,
 				78B1C82420B148A800C4BAB5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,6 +409,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78B1C86D20B1499B00C4BAB5 /* Player.swift in Sources */,
+				78B1C87120B14A6800C4BAB5 /* Playable.swift in Sources */,
+				78B1C86B20B1499B00C4BAB5 /* PlayerItem.swift in Sources */,
+				78B1C87520B1604100C4BAB5 /* Defaults.swift in Sources */,
+				78B1C87720B1690200C4BAB5 /* PlayerError.swift in Sources */,
+				78B1C86C20B1499B00C4BAB5 /* PlayerView.swift in Sources */,
+				78B1C87320B1600E00C4BAB5 /* DisplayLinkProxy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +589,7 @@
 		78B1C83E20B148A900C4BAB5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Visual/Info.plist;
@@ -561,6 +607,7 @@
 		78B1C83F20B148A900C4BAB5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Visual/Info.plist;
@@ -618,6 +665,7 @@
 		78B1C85F20B148EE00C4BAB5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -635,6 +683,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xspyhack.Lepton;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -645,6 +694,7 @@
 		78B1C86020B148EE00C4BAB5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

@@ -7,19 +7,97 @@
 //
 
 import UIKit
+import Lepton
+import AVFoundation
 
 class ViewController: UIViewController {
+
+    var player: Player = Player()
+
+    var asset: AVURLAsset?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
+        view.backgroundColor = UIColor.black
+
+        player.playerView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+        player.delegate = self
+        player.isAutoPlay = false
+
+        let videoURL = URL(fileURLWithPath: Bundle.main.path(forResource: "1", ofType: "M4V")!)
+        let asset = AVURLAsset(url: videoURL)
+
+        asset.loadValuesAsynchronously(forKeys: ["duration", "tracks"]) { [unowned self] in
+
+            let composition = AVMutableComposition()
+
+            guard let videoTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid) else {
+                return
+            }
+
+            let timeRange = CMTimeRange(start: kCMTimeZero, duration: self.asset!.duration)
+
+            guard let track = self.asset!.tracks(withMediaType: .video).first else {
+                return
+            }
+
+            try? videoTrack.insertTimeRange(timeRange, of: track, at: kCMTimeZero)
+
+            let videoComposition = AVMutableVideoComposition(propertiesOf: composition)
+            videoComposition.renderSize = track.naturalSize
+            videoComposition.frameDuration = CMTime(seconds: 1, preferredTimescale: 30)
+            let audioMix = AVMutableAudioMix()
+
+            let playerItem = PlayerItem(composition: composition, videoComposition: videoComposition, audioMix: audioMix, filter: Filter(type: .instant))
+
+            self.player.load(item: playerItem)
+        }
+
+        self.asset = asset
+
+        view.addSubview(player.playerView)
+    }
+
+    @IBAction func play(_ sender: Any) {
+        player.play()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
 
+extension ViewController: PlayerDelegate {
 
+    func player(_ player: Player, playerViewDidPlayToEndTime: PlayerView) {
+        print(#function)
+    }
+
+    func player(_ player: Player, playerView: PlayerView, progress: Float) {
+        print("player process: \(progress)")
+    }
+
+    func player(_ player: Player, playerView: PlayerView, didFailWith error: Error?) {
+        print("player did fail with error: \(String(describing: error))")
+    }
+
+    func player(_ player: Player, playerView: PlayerView, durationDidChange duration: Float) {
+        print("player duration did change: \(duration)")
+    }
+
+    func player(_ player: Player, playerView: PlayerView, statusDidChange status: PlayerStatus) {
+        print("player status did change: \(status)")
+    }
+
+    func player(_ player: Player, playerView: PlayerView, presentationSizeDidChange presentationSize: CGSize) {
+        print("player presentation size did change: \(presentationSize)")
+    }
 }
 
