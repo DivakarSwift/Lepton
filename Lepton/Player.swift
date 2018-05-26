@@ -11,12 +11,22 @@ import AVFoundation
 public enum PlayerStatus {
     case unknown
     case readyToPlay
-    case play
-    case pause
+    case playing
+    case paused
     case playToEndTime
     case failed
 }
 
+public enum PlaybackBufferStatus {
+    case unknown
+    case empty
+}
+
+public typealias PlayerView = UIView & Renderer
+
+/// The Player
+///
+///
 public class Player: NSObject {
 
     /// Auto play when loaded player item
@@ -28,8 +38,8 @@ public class Player: NSObject {
     /// h.264 player
     public let player = AVPlayer()
 
-    /// Player view which use to display AVSampleBuffer
-    public lazy var playerView: PlayerView = PlayerView()
+    /// Player view which use to render pixel buffer
+    public let playerView: PlayerView
 
     /// Current player status
     public private(set) var status: PlayerStatus = .unknown {
@@ -46,6 +56,8 @@ public class Player: NSObject {
 
     /// Current player time
     public private(set) var currentTime: Float64 = 0.0
+
+    public var suppressesPlayerRendering: Bool = false
     
     private let videoOutputQueue = DispatchQueue(label: "com.blessingsoft.lepton.videoOutput")
 
@@ -53,6 +65,7 @@ public class Player: NSObject {
         let attributes = [String(kCVPixelBufferPixelFormatTypeKey): kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange]
         let output = AVPlayerItemVideoOutput(pixelBufferAttributes: attributes)
         output.setDelegate(self, queue: self.videoOutputQueue)
+        output.suppressesPlayerRendering = self.suppressesPlayerRendering
         return output
     }()
 
@@ -61,6 +74,8 @@ public class Player: NSObject {
     private var lastTimestamp: CFTimeInterval = 0
     
     private var currentItem: Playable?
+
+    private var preferredTransform: CGAffineTransform = .identity
     
     private struct Constant {
         static let oneFrameDuration: TimeInterval = 0.03
@@ -86,6 +101,10 @@ public class Player: NSObject {
         link.isPaused = true
         return link
     }()
+
+    public override init() {
+        self.playerView = RenderView()
+    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -119,15 +138,19 @@ extension Player {
         player.play()
         displayLink.isPaused = false
 
-        status = .play
+        status = .playing
     }
     
     public func pause() {
+        guard status == .playing else {
+            return
+        }
+
         removeTimeObserver(from: player)
         player.pause()
         displayLink.isPaused = true
 
-        status = .pause
+        status = .paused
     }
     
     public func stop() {
@@ -141,34 +164,46 @@ extension Player {
 
         status = .unknown
     }
-    
-    public func seek(to seconds: Float64) throws {
+
+    public func seek(to seconds: Float64, completionHandler: ((Bool) -> Void)? = nil) throws {
+
         guard let playerItem = player.currentItem else {
             return
         }
-        
+
         let time = CMTime(seconds: seconds, preferredTimescale: playerItem.asset.duration.timescale)
         guard time.isValid else {
             assert(false, "time is not valid")
             throw PlayerError.timeInvalid
         }
 
-        player.seek(to: time, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
+        if let handler = completionHandler {
+            player.seek(to: time, completionHandler: handler)
+        } else {
+            player.seek(to: time)
+        }
     }
 
-    public func seek(to seconds: Float64, completionHandler: @escaping (Bool) -> Void) throws {
+    public func seek(to seconds: Float64, toleranceBefore: Float64, toleranceAfter: Float64, completionHandler: ((Bool) -> Void)? = nil) throws {
 
         guard let playerItem = player.currentItem else {
             return
         }
 
         let time = CMTime(seconds: seconds, preferredTimescale: playerItem.asset.duration.timescale)
-        guard time.isValid else {
+        let before = CMTime(seconds: toleranceBefore, preferredTimescale: playerItem.asset.duration.timescale)
+        let after = CMTime(seconds: toleranceAfter, preferredTimescale: playerItem.asset.duration.timescale)
+
+        guard time.isValid, before.isValid, after.isValid else {
             assert(false, "time is not valid")
             throw PlayerError.timeInvalid
         }
 
-        player.seek(to: time, completionHandler: completionHandler)
+        if let handler = completionHandler {
+            player.seek(to: time, toleranceBefore: before, toleranceAfter: after, completionHandler: handler)
+        } else {
+            player.seek(to: time, toleranceBefore: before, toleranceAfter: after)
+        }
     }
 }
 
@@ -203,6 +238,10 @@ extension Player {
         }
     }
 
+    public var isPlaying: Bool {
+        return player.rate > 0.0
+    }
+
     public var error: Error? {
         return player.error
     }
@@ -220,29 +259,61 @@ extension Player {
         
         let item = AVPlayerItem(asset: asset)
         
-        let assetKeysToLoad = ["tracks", "duration", "playable"]
+        let keysToLoad = ["tracks", "duration", "playable"]
         
-        asset.loadValuesAsynchronously(forKeys: assetKeysToLoad) { [unowned self] in
-            for item in assetKeysToLoad {
+        asset.loadValuesAsynchronously(forKeys: keysToLoad) { [unowned self] in
+            for key in keysToLoad {
                 var error: NSError?
-                if asset.statusOfValue(forKey: item, error: &error) == .failed {
-                    print("Key value loading failed for key: \(item) with error: \(error!)")
+                if asset.statusOfValue(forKey: key, error: &error) == .failed {
+                    print("Key value loading failed for key: \(key) with error: \(error!)")
+                    self.status = .failed
                     return
                 }
             }
             
             guard asset.isPlayable else {
                 print("Asset is not playable")
+                self.status = .failed
                 return
             }
-            
-            item.add(self.videoOutput)
-            self.player.replaceCurrentItem(with: item)
-            self.videoOutput.requestNotificationOfMediaDataChange(withAdvanceInterval: Constant.oneFrameDuration)
+
+            self .addVideoOutput(to: item)
             
             if autoPlay {
                 self.play()
             }
+        }
+    }
+
+    private func addVideoOutput(to item: AVPlayerItem) {
+
+        item.add(videoOutput)
+        player.replaceCurrentItem(with: item)
+        videoOutput.requestNotificationOfMediaDataChange(withAdvanceInterval: Constant.oneFrameDuration)
+
+        guard let track = item.asset.tracks(withMediaType: .video).first else {
+            return
+        }
+
+        var transform = track.preferredTransform
+
+        if transform.b == 1, transform.c == -1 {
+            transform = transform.rotated(by: .pi)
+        }
+
+        DispatchQueue.main.async {
+            // rotate if need
+            let videoSize = track.naturalSize
+            let viewSize = self.playerView.bounds.size
+            let rect = CGRect(origin: .zero, size: videoSize).applying(transform)
+            let viewWide = viewSize.width / viewSize.height > 1
+            let videoWide = rect.width / rect.height > 1
+
+            if viewWide != videoWide {
+                transform = transform.rotated(by: .pi / 2)
+            }
+
+            self.preferredTransform = transform
         }
     }
     
@@ -263,7 +334,11 @@ extension Player {
     }
     
     private func load(filter: FilterProtocol?) {
-        playerView.filter = filter?.filter
+        guard var filterRenderer = playerView as? FilterRenderer else {
+            return
+        }
+
+        filterRenderer.filter = filter
     }
     
     private func load(layer: CALayer?, videoSize: CGSize) {
@@ -378,7 +453,7 @@ extension Player {
         delegate?.player(self, playerViewDidPlayToEndTime: playerView)
     }
     
-    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         guard let context = context else { return }
         
@@ -417,8 +492,11 @@ extension Player: AVPlayerItemOutputPullDelegate {
     public func outputSequenceWasFlushed(_ output: AVPlayerItemOutput) {
         // video layer flush
         DispatchQueue.main.async {
-            self.playerView.videoLayer.controlTimebase = self.player.currentItem!.timebase
-            self.playerView.videoLayer.flush()
+            guard let playerView = self.playerView as? SampleBufferDisplayView else {
+                return
+            }
+            playerView.videoLayer.controlTimebase = self.player.currentItem!.timebase
+            playerView.videoLayer.flush()
         }
     }
 }
@@ -436,23 +514,36 @@ extension Player: DisplayLinkProtocol {
 
         // Calculate the nextVsync time which is when the screen will be refreshed next.
         let nextVSync = displayLink.timestamp + displayLink.duration
-        let itemTime = videoOutput.itemTime(forHostTime: nextVSync)
-        
+
+        render(at: nextVSync)
+    }
+}
+
+// MARK: - Render
+
+extension Player {
+
+    private func render(at time: TimeInterval) {
+
+        let itemTime = videoOutput.itemTime(forHostTime: time)
+
         var presentationItemTime = kCMTimeZero
-        
+
         guard videoOutput.hasNewPixelBuffer(forItemTime: itemTime), let pixelBuffer = videoOutput.copyPixelBuffer(forItemTime: itemTime, itemTimeForDisplay: &presentationItemTime)  else {
-            
+
             if displayLink.timestamp - lastTimestamp > 0.5 {
                 displayLink.isPaused = true
                 videoOutput.requestNotificationOfMediaDataChange(withAdvanceInterval: Constant.oneFrameDuration)
             }
-            
+
             return
         }
-        
+
         lastTimestamp = displayLink.timestamp
+        playerView.setPreferredTransform(preferredTransform)
         playerView.display(pixelBuffer: pixelBuffer, atTime: presentationItemTime)
     }
+
 }
 
 // MARK: - PreviewerDelegate
