@@ -19,13 +19,20 @@ public class RenderView: UIView, FilterRenderer {
     private var ciImage: CIImage? = nil
     private var imageTime: Float64 = 0.0
 
-    private var context: Context?
+    private lazy var renderContext: RenderContext? = {
+
+        guard let cgContext = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+
+        return RenderContext(cgContext: cgContext)
+    }()
     
-    public override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -43,7 +50,7 @@ public class RenderView: UIView, FilterRenderer {
     override public func draw(_ rect: CGRect) {
         super.draw(rect)
 
-        guard loadContext(), let image = renderredImage(in: rect) else {
+        guard let renderContext = renderContext, let image = renderredImage(in: rect) else {
             return
         }
 
@@ -68,7 +75,7 @@ public class RenderView: UIView, FilterRenderer {
 
         let drawRect = CGRect(origin: drawOrigin, size: image.extent.size)
 
-        context?.context.draw(image, in: drawRect, from: image.extent)
+        renderContext.context.draw(image, in: drawRect, from: image.extent)
     }
 
     private func renderredImage(in rect: CGRect) -> CIImage? {
@@ -84,18 +91,5 @@ public class RenderView: UIView, FilterRenderer {
         }
 
         return filter.image(by: image, at: imageTime)
-    }
-
-    private func loadContext() -> Bool {
-        guard context == nil else {
-            return true
-        }
-
-        guard let cgContext = UIGraphicsGetCurrentContext() else {
-            return false
-        }
-        context = Context(cgContext: cgContext)
-
-        return true
     }
 }

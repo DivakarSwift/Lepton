@@ -1,5 +1,5 @@
 //
-//  Context.swift
+//  RenderContext.swift
 //  Lepton
 //
 //  Created by bl4ckra1sond3tre on 2018/5/26.
@@ -8,7 +8,7 @@
 
 import CoreGraphics
 
-struct Context {
+struct RenderContext {
 
     let context: CIContext
 
