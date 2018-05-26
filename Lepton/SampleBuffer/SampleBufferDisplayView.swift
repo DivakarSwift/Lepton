@@ -52,4 +52,8 @@ public class SampleBufferDisplayView: UIView, Renderer {
 
         videoLayer.enqueue(buffer)
     }
+
+    public func setPreferredTransform(_ transform: CGAffineTransform) {
+        //
+    }
 }
