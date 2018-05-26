@@ -29,7 +29,7 @@ extension FilterProtocol {
         return filter.name
     }
 
-    public func image(by processingImage: CIImage, at time: TimeInterval) -> CIImage {
+    public func image(by processingImage: CIImage, at time: Float64) -> CIImage {
         guard isEnabled else {
             return processingImage
         }
