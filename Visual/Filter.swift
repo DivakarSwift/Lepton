@@ -39,15 +39,24 @@ public enum FilterType : String {
     }
 }
 
-public struct Filter : FilterProtocol {
+public struct Filter: FilterProtocol {
 
-    let type: FilterType
+    public let filter: CIFilter
 
-    public init(type: FilterType) {
-        self.type = type
+    public let type: FilterType
+
+    public init?(type: FilterType) {
+        guard let filter = type.ciFilter else {
+            return nil
+        }
+
+        self.init(filter: filter, type: type)
     }
 
-    public var filter: CIFilter {
-        return type.ciFilter!
+    public init(filter: CIFilter, type: FilterType) {
+        self.filter = filter
+        self.type = type
+
+        self.filter.setDefaults()
     }
 }

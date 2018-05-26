@@ -8,11 +8,6 @@
 
 import AVFoundation
 
-public protocol FilterProtocol {
-
-    var filter: CIFilter { get }
-}
-
 public enum PlayerItemStatus {
     case unknown
     case readyToPlay

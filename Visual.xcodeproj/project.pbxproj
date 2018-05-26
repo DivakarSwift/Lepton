@@ -19,7 +19,7 @@
 		78B1C85D20B148EE00C4BAB5 /* Lepton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B1C84820B148ED00C4BAB5 /* Lepton.framework */; };
 		78B1C85E20B148EE00C4BAB5 /* Lepton.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 78B1C84820B148ED00C4BAB5 /* Lepton.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		78B1C86B20B1499B00C4BAB5 /* PlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C86620B1499A00C4BAB5 /* PlayerItem.swift */; };
-		78B1C86C20B1499B00C4BAB5 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C86720B1499B00C4BAB5 /* PlayerView.swift */; };
+		78B1C86C20B1499B00C4BAB5 /* SampleBufferDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C86720B1499B00C4BAB5 /* SampleBufferDisplayView.swift */; };
 		78B1C86D20B1499B00C4BAB5 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C86820B1499B00C4BAB5 /* Player.swift */; };
 		78B1C87120B14A6800C4BAB5 /* Playable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C87020B14A6800C4BAB5 /* Playable.swift */; };
 		78B1C87320B1600E00C4BAB5 /* DisplayLinkProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C87220B1600E00C4BAB5 /* DisplayLinkProxy.swift */; };
@@ -27,6 +27,10 @@
 		78B1C87720B1690200C4BAB5 /* PlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C87620B1690200C4BAB5 /* PlayerError.swift */; };
 		78B1C87A20B16ECC00C4BAB5 /* 1.M4V in Resources */ = {isa = PBXBuildFile; fileRef = 78B1C87920B16ECC00C4BAB5 /* 1.M4V */; };
 		78B1C87C20B1A26700C4BAB5 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C87B20B1A26700C4BAB5 /* Filter.swift */; };
+		78D5521920B92DFA00866A40 /* RenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5521820B92DFA00866A40 /* RenderView.swift */; };
+		78D5521B20B92ECC00866A40 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5521A20B92ECC00866A40 /* Context.swift */; };
+		78D5522220B946C400866A40 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5522120B946C400866A40 /* Filter.swift */; };
+		78D5522420B9540B00866A40 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5522320B9540B00866A40 /* Renderer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,7 +96,7 @@
 		78B1C85720B148EE00C4BAB5 /* LeptonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeptonTests.swift; sourceTree = "<group>"; };
 		78B1C85920B148EE00C4BAB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78B1C86620B1499A00C4BAB5 /* PlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerItem.swift; sourceTree = "<group>"; };
-		78B1C86720B1499B00C4BAB5 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		78B1C86720B1499B00C4BAB5 /* SampleBufferDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleBufferDisplayView.swift; sourceTree = "<group>"; };
 		78B1C86820B1499B00C4BAB5 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		78B1C87020B14A6800C4BAB5 /* Playable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playable.swift; sourceTree = "<group>"; };
 		78B1C87220B1600E00C4BAB5 /* DisplayLinkProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayLinkProxy.swift; sourceTree = "<group>"; };
@@ -100,6 +104,10 @@
 		78B1C87620B1690200C4BAB5 /* PlayerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerError.swift; sourceTree = "<group>"; };
 		78B1C87920B16ECC00C4BAB5 /* 1.M4V */ = {isa = PBXFileReference; lastKnownFileType = file; path = 1.M4V; sourceTree = "<group>"; };
 		78B1C87B20B1A26700C4BAB5 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		78D5521820B92DFA00866A40 /* RenderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderView.swift; sourceTree = "<group>"; };
+		78D5521A20B92ECC00866A40 /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
+		78D5522120B946C400866A40 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		78D5522320B9540B00866A40 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,10 +193,12 @@
 		78B1C84920B148ED00C4BAB5 /* Lepton */ = {
 			isa = PBXGroup;
 			children = (
+				78D5522520B958D800866A40 /* SampleBuffer */,
+				78D5521D20B9309800866A40 /* Filter */,
 				78B1C87420B1604100C4BAB5 /* Defaults.swift */,
 				78B1C87220B1600E00C4BAB5 /* DisplayLinkProxy.swift */,
-				78B1C86720B1499B00C4BAB5 /* PlayerView.swift */,
 				78B1C87020B14A6800C4BAB5 /* Playable.swift */,
+				78D5522320B9540B00866A40 /* Renderer.swift */,
 				78B1C86820B1499B00C4BAB5 /* Player.swift */,
 				78B1C86620B1499A00C4BAB5 /* PlayerItem.swift */,
 				78B1C87620B1690200C4BAB5 /* PlayerError.swift */,
@@ -213,6 +223,24 @@
 				78B1C87920B16ECC00C4BAB5 /* 1.M4V */,
 			);
 			path = Vendors;
+			sourceTree = "<group>";
+		};
+		78D5521D20B9309800866A40 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				78D5521A20B92ECC00866A40 /* Context.swift */,
+				78D5521820B92DFA00866A40 /* RenderView.swift */,
+				78D5522120B946C400866A40 /* Filter.swift */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		78D5522520B958D800866A40 /* SampleBuffer */ = {
+			isa = PBXGroup;
+			children = (
+				78B1C86720B1499B00C4BAB5 /* SampleBufferDisplayView.swift */,
+			);
+			path = SampleBuffer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -410,11 +438,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				78B1C86D20B1499B00C4BAB5 /* Player.swift in Sources */,
+				78D5522220B946C400866A40 /* Filter.swift in Sources */,
 				78B1C87120B14A6800C4BAB5 /* Playable.swift in Sources */,
 				78B1C86B20B1499B00C4BAB5 /* PlayerItem.swift in Sources */,
+				78D5522420B9540B00866A40 /* Renderer.swift in Sources */,
 				78B1C87520B1604100C4BAB5 /* Defaults.swift in Sources */,
 				78B1C87720B1690200C4BAB5 /* PlayerError.swift in Sources */,
-				78B1C86C20B1499B00C4BAB5 /* PlayerView.swift in Sources */,
+				78B1C86C20B1499B00C4BAB5 /* SampleBufferDisplayView.swift in Sources */,
+				78D5521B20B92ECC00866A40 /* Context.swift in Sources */,
+				78D5521920B92DFA00866A40 /* RenderView.swift in Sources */,
 				78B1C87320B1600E00C4BAB5 /* DisplayLinkProxy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -523,7 +555,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -577,7 +609,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -592,7 +624,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DJ5N6T769K;
 				INFOPLIST_FILE = Visual/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -610,7 +644,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DJ5N6T769K;
 				INFOPLIST_FILE = Visual/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
