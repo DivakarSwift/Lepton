@@ -13,6 +13,11 @@ struct Context {
     let context: CIContext
 
     init(cgContext: CGContext) {
-        self.context = CIContext(cgContext: cgContext, options: [String(kCIContextWorkingColorSpace): NSNull(), String(kCIContextOutputColorSpace): NSNull()])
+        let options: [String: Any] = [
+            kCIContextWorkingColorSpace: NSNull(),
+            kCIContextOutputColorSpace: NSNull()
+        ]
+
+        self.context = CIContext(cgContext: cgContext, options: options)
     }
 }

@@ -17,7 +17,7 @@ public enum PlayerItemStatus {
     case failed
 }
 
-public struct PlayerItem: Playable {
+public struct PlayerItem: PlayerItemProtocol {
     
     public let composition: AVComposition
     

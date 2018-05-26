@@ -1,5 +1,5 @@
 //
-//  Playable.swift
+//  PlayerItemProtocol.swift
 //  Lepton
 //
 //  Created by bl4ckra1sond3tre on 20/05/2018.
@@ -8,7 +8,7 @@
 
 import AVFoundation
 
-public protocol Playable {
+public protocol PlayerItemProtocol {
 
     var composition: AVComposition { get }
 

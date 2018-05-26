@@ -73,7 +73,7 @@ public class Player: NSObject {
     
     private var lastTimestamp: CFTimeInterval = 0
     
-    private var currentItem: Playable?
+    private var currentItem: PlayerItemProtocol?
 
     private var preferredTransform: CGAffineTransform = .identity
     
@@ -105,6 +105,10 @@ public class Player: NSObject {
     public override init() {
         self.playerView = RenderView()
     }
+
+    public init(playerView: PlayerView) {
+        self.playerView = playerView
+    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -116,7 +120,7 @@ public class Player: NSObject {
 
 extension Player {
     
-    public func load(item: Playable, seekTo seconds: Float64 = 0) {
+    public func load(item: PlayerItemProtocol, seekTo seconds: Float64 = 0) {
         currentItem = item
         
         player.pause()
@@ -277,7 +281,7 @@ extension Player {
                 return
             }
 
-            self .addVideoOutput(to: item)
+            self.addVideoOutput(to: item)
             
             if autoPlay {
                 self.play()
