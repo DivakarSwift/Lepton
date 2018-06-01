@@ -13,11 +13,6 @@ struct RenderContext {
     let context: CIContext
 
     init(cgContext: CGContext) {
-        let options: [String: Any] = [
-            kCIContextWorkingColorSpace: NSNull(),
-            kCIContextOutputColorSpace: NSNull()
-        ]
-
-        self.context = CIContext(cgContext: cgContext, options: options)
+        self.context = CIContext(cgContext: cgContext)
     }
 }

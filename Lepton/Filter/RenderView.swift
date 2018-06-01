@@ -50,6 +50,8 @@ public class RenderView: UIView, FilterRenderer {
     override public func draw(_ rect: CGRect) {
         super.draw(rect)
 
+        print("draw in \(rect), \(bounds)")
+
         guard let renderContext = renderContext, let image = renderredImage(in: rect) else {
             return
         }
