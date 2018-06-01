@@ -10,6 +10,59 @@ import UIKit
 import Lepton
 import AVFoundation
 
+class ViewControllerAnimation: PlayerTransitionAnimation {
+
+    let initialFrame: CGRect
+    let finalFrame: CGRect
+    let player: Player
+
+    init(initialFrame: CGRect, finalFrame: CGRect, player: Player) {
+        self.initialFrame = initialFrame
+        self.finalFrame = finalFrame
+        self.player = player
+    }
+
+    func startAnimate(withType transitionType: TransitionType, containerView: UIView) {
+        player.playerView.removeFromSuperview()
+        switch transitionType {
+        case .present:
+            player.playerView.frame = initialFrame
+            containerView.addSubview(player.playerView)
+        case .dismiss:
+            player.playerView.frame = finalFrame
+            containerView.addSubview(player.playerView)
+        }
+    }
+
+    func animate(withType transitionType: TransitionType, duration: TimeInterval, toView: UIView, completion: ((Bool) -> Void)?) {
+
+        toView.alpha = transitionType == .present ? 0.0 : 1.0
+
+        let frame = transitionType == .present ? self.finalFrame : self.initialFrame
+
+        UIView.animate(withDuration: duration, animations: {
+            self.player.playerView.frame = frame
+        }, completion: { finished in
+            toView.alpha = 1.0
+            completion?(finished)
+        })
+    }
+
+    func finishAnimate(withType transitionType: TransitionType, toView: UIView, completion: Bool) {
+
+        player.playerView.removeFromSuperview()
+
+        switch transitionType {
+        case .present:
+            player.playerView.frame = completion ? finalFrame : initialFrame
+        case .dismiss:
+            player.playerView.frame = completion ? initialFrame : finalFrame
+        }
+
+        toView.addSubview(player.playerView)
+    }
+}
+
 class ViewController: UIViewController {
 
     var player: Player = Player()
@@ -20,9 +73,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        view.backgroundColor = UIColor.black
+        view.backgroundColor = UIColor.blue
 
-        player.playerView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+        player.playerView.frame = CGRect(x: 20, y: 200, width: view.bounds.width - 40, height: view.bounds.height - 400)
         player.delegate = self
         player.isAutoPlay = false
 
@@ -60,17 +113,23 @@ class ViewController: UIViewController {
         view.addSubview(player.playerView)
     }
 
+    var transitioning: PlayerAnimatedTransitioning?
+
     @IBAction func play(_ sender: Any) {
         player.play()
-    }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
+        let vc = PlayerViewController()
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        let animation = ViewControllerAnimation(initialFrame: player.playerView.frame, finalFrame: view.frame, player: player)
+        transitioning = PlayerAnimatedTransitioning(duration: 5.25, animation: animation)
+        let interectiveTransition = PlayerInteractiveTransition()
+
+        interectiveTransition.add(to: vc)
+        transitioning?.interactiveTransition = interectiveTransition
+
+        vc.transitioningDelegate = transitioning
+
+        navigationController?.present(vc, animated: true, completion: nil)
     }
 }
 
