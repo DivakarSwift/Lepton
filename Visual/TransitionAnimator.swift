@@ -1,5 +1,5 @@
 //
-//  PlayerTransitionAnimator.swift
+//  TransitionAnimator.swift
 //  Visual
 //
 //  Created by bl4ckra1sond3tre on 2018/5/28.
@@ -13,15 +13,15 @@ public enum TransitionType {
     case dismiss
 }
 
-public class PlayerTransitionAnimator: NSObject {
+public class TransitionAnimator: NSObject {
 
     private let duration: TimeInterval
 
     private let transitionType: TransitionType
 
-    private let animation: PlayerTransitionAnimation
+    private let animation: TransitionAnimation
 
-    public init(transitionType: TransitionType, duration: TimeInterval, animation: PlayerTransitionAnimation) {
+    public init(transitionType: TransitionType, duration: TimeInterval, animation: TransitionAnimation) {
         self.transitionType = transitionType
         self.duration = duration
         self.animation = animation
@@ -30,7 +30,7 @@ public class PlayerTransitionAnimator: NSObject {
     }
 }
 
-extension PlayerTransitionAnimator: UIViewControllerAnimatedTransitioning {
+extension TransitionAnimator: UIViewControllerAnimatedTransitioning {
 
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration
