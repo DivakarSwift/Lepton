@@ -33,9 +33,10 @@
 		78D5522220B946C400866A40 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5522120B946C400866A40 /* Filter.swift */; };
 		78D5522420B9540B00866A40 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5522320B9540B00866A40 /* Renderer.swift */; };
 		78D5522920BC1D1400866A40 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5522820BC1D1400866A40 /* PlayerViewController.swift */; };
-		78D5522B20BC1E3D00866A40 /* PlayerTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5522A20BC1E3D00866A40 /* PlayerTransitionAnimator.swift */; };
-		78D5522D20BC1F5400866A40 /* PlayerInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5522C20BC1F5400866A40 /* PlayerInteractiveTransition.swift */; };
-		78D5522F20BC23B600866A40 /* PlayerAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5522E20BC23B600866A40 /* PlayerAnimatedTransitioning.swift */; };
+		78D5522B20BC1E3D00866A40 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5522A20BC1E3D00866A40 /* TransitionAnimator.swift */; };
+		78D5522D20BC1F5400866A40 /* InteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5522C20BC1F5400866A40 /* InteractiveTransition.swift */; };
+		78D5522F20BC23B600866A40 /* AnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5522E20BC23B600866A40 /* AnimatedTransitioning.swift */; };
+		78EBE4E220C28C2000C33396 /* TransitionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EBE4E120C28C2000C33396 /* TransitionAnimation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,9 +116,10 @@
 		78D5522120B946C400866A40 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		78D5522320B9540B00866A40 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		78D5522820BC1D1400866A40 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
-		78D5522A20BC1E3D00866A40 /* PlayerTransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTransitionAnimator.swift; sourceTree = "<group>"; };
-		78D5522C20BC1F5400866A40 /* PlayerInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerInteractiveTransition.swift; sourceTree = "<group>"; };
-		78D5522E20BC23B600866A40 /* PlayerAnimatedTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAnimatedTransitioning.swift; sourceTree = "<group>"; };
+		78D5522A20BC1E3D00866A40 /* TransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
+		78D5522C20BC1F5400866A40 /* InteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveTransition.swift; sourceTree = "<group>"; };
+		78D5522E20BC23B600866A40 /* AnimatedTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedTransitioning.swift; sourceTree = "<group>"; };
+		78EBE4E120C28C2000C33396 /* TransitionAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAnimation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,10 +184,11 @@
 				78B1C87820B16DBA00C4BAB5 /* Vendors */,
 				78B1C82320B148A800C4BAB5 /* AppDelegate.swift */,
 				78B1C82520B148A800C4BAB5 /* ViewController.swift */,
-				78D5522A20BC1E3D00866A40 /* PlayerTransitionAnimator.swift */,
-				78D5522E20BC23B600866A40 /* PlayerAnimatedTransitioning.swift */,
+				78D5522A20BC1E3D00866A40 /* TransitionAnimator.swift */,
+				78D5522E20BC23B600866A40 /* AnimatedTransitioning.swift */,
 				7894722320C0374700E5ABBB /* PlayerTransitionAnimation.swift */,
-				78D5522C20BC1F5400866A40 /* PlayerInteractiveTransition.swift */,
+				78EBE4E120C28C2000C33396 /* TransitionAnimation.swift */,
+				78D5522C20BC1F5400866A40 /* InteractiveTransition.swift */,
 				78D5522820BC1D1400866A40 /* PlayerViewController.swift */,
 				78B1C87B20B1A26700C4BAB5 /* Filter.swift */,
 				78B1C82720B148A800C4BAB5 /* Main.storyboard */,
@@ -434,14 +437,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78D5522D20BC1F5400866A40 /* PlayerInteractiveTransition.swift in Sources */,
+				78D5522D20BC1F5400866A40 /* InteractiveTransition.swift in Sources */,
 				78B1C82620B148A800C4BAB5 /* ViewController.swift in Sources */,
+				78EBE4E220C28C2000C33396 /* TransitionAnimation.swift in Sources */,
 				7894722420C0374700E5ABBB /* PlayerTransitionAnimation.swift in Sources */,
 				78D5522920BC1D1400866A40 /* PlayerViewController.swift in Sources */,
 				78B1C87C20B1A26700C4BAB5 /* Filter.swift in Sources */,
-				78D5522F20BC23B600866A40 /* PlayerAnimatedTransitioning.swift in Sources */,
+				78D5522F20BC23B600866A40 /* AnimatedTransitioning.swift in Sources */,
 				78B1C82420B148A800C4BAB5 /* AppDelegate.swift in Sources */,
-				78D5522B20BC1E3D00866A40 /* PlayerTransitionAnimator.swift in Sources */,
+				78D5522B20BC1E3D00866A40 /* TransitionAnimator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
