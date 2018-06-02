@@ -10,8 +10,6 @@ import UIKit
 import Lepton
 import AVFoundation
 
-
-
 class ViewController: UIViewController {
 
     var player: Player = Player()
@@ -21,8 +19,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
-        view.backgroundColor = UIColor.blue
 
         player.playerView.frame = CGRect(x: 20, y: 200, width: view.bounds.width - 40, height: view.bounds.height - 400)
         player.delegate = self
