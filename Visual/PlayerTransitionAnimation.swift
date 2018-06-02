@@ -7,36 +7,57 @@
 //
 
 import UIKit
+import Lepton
 
-public protocol PlayerTransitionAnimation {
+public class PlayerTransitionAnimation: TransitionAnimation {
 
-    var initialFrame: CGRect { get }
-    var finalFrame: CGRect { get }
+    public let initialFrame: CGRect
+    public let finalFrame: CGRect
+    public let player: Player
 
-    func startAnimate(withType transitionType: TransitionType, containerView: UIView)
+    public init(initialFrame: CGRect, finalFrame: CGRect, player: Player) {
+        self.initialFrame = initialFrame
+        self.finalFrame = finalFrame
+        self.player = player
+    }
 
-    func animate(withType transitionType: TransitionType, duration: TimeInterval, toView: UIView, completion: ((Bool) -> Void)?)
-
-    func finishAnimate(withType transitionType: TransitionType, toView: UIView, completion: Bool)
-}
-
-extension PlayerTransitionAnimation {
-
-    public func animate(withType transitionType: TransitionType, duration: TimeInterval, using transitionContext: UIViewControllerContextTransitioning, completion: ((Bool) -> Void)?) {
-
-        UIApplication.shared.beginIgnoringInteractionEvents()
-
-        guard let viewController = transitionContext.viewController(forKey: transitionType == .present ? .to : .from) else {
-            return
+    public func startAnimate(withType transitionType: TransitionType, containerView: UIView) {
+        player.playerView.removeFromSuperview()
+        switch transitionType {
+        case .present:
+            player.playerView.frame = initialFrame
+            containerView.addSubview(player.playerView)
+        case .dismiss:
+            player.playerView.frame = finalFrame
+            containerView.addSubview(player.playerView)
         }
+    }
 
-        let finalFrame = transitionContext.finalFrame(for: viewController)
+    public func animate(withType transitionType: TransitionType, duration: TimeInterval, toView: UIView, completion: ((Bool) -> Void)?) {
+
+        toView.alpha = transitionType == .present ? 0.0 : 1.0
+
+        let frame = transitionType == .present ? self.finalFrame : self.initialFrame
 
         UIView.animate(withDuration: duration, animations: {
-            viewController.view.frame = finalFrame
+            self.player.playerView.frame = frame
         }, completion: { finished in
-            UIApplication.shared.endIgnoringInteractionEvents()
+            toView.alpha = 1.0
             completion?(finished)
         })
+    }
+
+    public func finishAnimate(withType transitionType: TransitionType, toView: UIView, completion: Bool) {
+
+        player.playerView.removeFromSuperview()
+
+        switch transitionType {
+        case .present:
+            player.playerView.frame = completion ? finalFrame : initialFrame
+        case .dismiss:
+            player.playerView.frame = completion ? initialFrame : finalFrame
+        }
+
+        toView.addSubview(player.playerView)
     }
 }

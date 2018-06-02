@@ -10,58 +10,7 @@ import UIKit
 import Lepton
 import AVFoundation
 
-class ViewControllerAnimation: PlayerTransitionAnimation {
 
-    let initialFrame: CGRect
-    let finalFrame: CGRect
-    let player: Player
-
-    init(initialFrame: CGRect, finalFrame: CGRect, player: Player) {
-        self.initialFrame = initialFrame
-        self.finalFrame = finalFrame
-        self.player = player
-    }
-
-    func startAnimate(withType transitionType: TransitionType, containerView: UIView) {
-        player.playerView.removeFromSuperview()
-        switch transitionType {
-        case .present:
-            player.playerView.frame = initialFrame
-            containerView.addSubview(player.playerView)
-        case .dismiss:
-            player.playerView.frame = finalFrame
-            containerView.addSubview(player.playerView)
-        }
-    }
-
-    func animate(withType transitionType: TransitionType, duration: TimeInterval, toView: UIView, completion: ((Bool) -> Void)?) {
-
-        toView.alpha = transitionType == .present ? 0.0 : 1.0
-
-        let frame = transitionType == .present ? self.finalFrame : self.initialFrame
-
-        UIView.animate(withDuration: duration, animations: {
-            self.player.playerView.frame = frame
-        }, completion: { finished in
-            toView.alpha = 1.0
-            completion?(finished)
-        })
-    }
-
-    func finishAnimate(withType transitionType: TransitionType, toView: UIView, completion: Bool) {
-
-        player.playerView.removeFromSuperview()
-
-        switch transitionType {
-        case .present:
-            player.playerView.frame = completion ? finalFrame : initialFrame
-        case .dismiss:
-            player.playerView.frame = completion ? initialFrame : finalFrame
-        }
-
-        toView.addSubview(player.playerView)
-    }
-}
 
 class ViewController: UIViewController {
 
@@ -113,16 +62,17 @@ class ViewController: UIViewController {
         view.addSubview(player.playerView)
     }
 
-    var transitioning: PlayerAnimatedTransitioning?
+    var transitioning: AnimatedTransitioning?
 
     @IBAction func play(_ sender: Any) {
         player.play()
 
         let vc = PlayerViewController()
 
-        let animation = ViewControllerAnimation(initialFrame: player.playerView.frame, finalFrame: view.frame, player: player)
-        transitioning = PlayerAnimatedTransitioning(duration: 5.25, animation: animation)
-        let interectiveTransition = PlayerInteractiveTransition()
+        let animation = PlayerTransitionAnimation(initialFrame: player.playerView.frame, finalFrame: view.frame, player: player)
+        transitioning = AnimatedTransitioning(duration: 0.30, animation: animation)
+        let interectiveTransition = InteractiveTransition()
+        interectiveTransition.directions = [.top, .left, .bottom, .right]
 
         interectiveTransition.add(to: vc)
         transitioning?.interactiveTransition = interectiveTransition

@@ -49,13 +49,13 @@ extension TransitionAnimator: UIViewControllerAnimatedTransitioning {
 
         animation.animate(withType: transitionType, duration: duration, toView: toView) { finished in
             let completion = finished && !transitionContext.transitionWasCancelled
+            
+            if !completion {
+                toView.removeFromSuperview()
+            }
 
             guard let view = transitionContext.view(forKey: completion ? .to : .from) else {
                 return
-            }
-
-            if !completion {
-                toView.removeFromSuperview()
             }
 
             self.animation.finishAnimate(withType: self.transitionType, toView: view, completion: completion)
