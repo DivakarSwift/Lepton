@@ -6,6 +6,7 @@
 //  Copyright © 2018 blessingsoftware. All rights reserved.
 //
 
+import CoreImage
 import CoreMedia
 
 public enum RenderMode {
@@ -22,6 +23,8 @@ public protocol Renderer {
     func setPreferredTransform(_ transform: CGAffineTransform)
 
     func display(pixelBuffer: CVPixelBuffer, atTime time: CMTime)
+
+    func copyRendered(pixelBuffer: CVPixelBuffer) -> CVPixelBuffer
 }
 
 extension Renderer {

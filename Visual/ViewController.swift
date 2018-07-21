@@ -35,13 +35,13 @@ class ViewController: UIViewController {
                 return
             }
 
-            let timeRange = CMTimeRange(start: kCMTimeZero, duration: self.asset!.duration)
+            let timeRange = CMTimeRange(start: CMTime.zero, duration: self.asset!.duration)
 
             guard let track = self.asset!.tracks(withMediaType: .video).first else {
                 return
             }
 
-            try? videoTrack.insertTimeRange(timeRange, of: track, at: kCMTimeZero)
+            try? videoTrack.insertTimeRange(timeRange, of: track, at: CMTime.zero)
 
             let videoComposition = AVMutableVideoComposition(propertiesOf: composition)
             videoComposition.renderSize = track.naturalSize

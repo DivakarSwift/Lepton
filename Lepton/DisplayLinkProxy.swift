@@ -20,7 +20,7 @@ protocol DisplayLinkProtocol: class {
 
 extension DisplayLinkProtocol {
     func attachDisplayLink() {
-        displayLink.add(to: .current, forMode: RunLoopMode.commonModes)
+        displayLink.add(to: .current, forMode: RunLoop.Mode.common)
     }
 }
 

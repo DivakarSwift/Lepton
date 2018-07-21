@@ -22,7 +22,7 @@ public enum PlaybackBufferStatus {
     case empty
 }
 
-public typealias PlayerView = UIView & Renderer
+public typealias PlayerView = UIView & ViewRenderer
 
 /// The Player
 ///
@@ -83,13 +83,11 @@ public class Player: NSObject {
         static var playerItemContext = 0
         
         static var timeObserverToken: Any?
-        
-        static var playerStatus = 0
-        static var playerStatusKey = "status"
-        
-        static var playerItemStatus = 0
-        static var playerItemStatusKey = "currentItem.status"
     }
+
+    private var playerStatusToken: NSKeyValueObservation?
+
+    private var playerItemStatusToken: NSKeyValueObservation?
     
     /// Tracks whether the display link is initialized.
     private var displayLinkInitialized: Bool = false
@@ -97,7 +95,7 @@ public class Player: NSObject {
     lazy var displayLink: CADisplayLink = { [unowned self] in
         self.displayLinkInitialized = true
         let link = CADisplayLink(target: DisplayLinkProxy(target: self), selector: #selector(DisplayLinkProxy.tick(_:)))
-        link.add(to: .current, forMode: RunLoopMode.commonModes)
+        link.add(to: .current, forMode: RunLoop.Mode.common)
         link.isPaused = true
         return link
     }()
@@ -108,6 +106,7 @@ public class Player: NSObject {
 
     public init(playerView: PlayerView) {
         self.playerView = playerView
+        super.init()
     }
     
     deinit {
@@ -338,7 +337,7 @@ extension Player {
     }
     
     private func load(filter: FilterProtocol?) {
-        guard var filterRenderer = playerView as? FilterRenderer else {
+        guard var filterRenderer = playerView as? FilterViewRenderer else {
             return
         }
 
@@ -395,10 +394,15 @@ extension Player {
  
     private func startObserving(player: AVPlayer) {
         guard !isObserving else { return }
-        
-        player.addObserver(self, forKeyPath: Constant.playerStatusKey, options: .new, context: &Constant.playerStatus)
-        player.addObserver(self, forKeyPath: Constant.playerItemStatusKey, options: .new, context: &Constant.playerItemStatus)
-        
+
+        playerStatusToken = player.observe(\.status, options: [.new]) { [weak self] player, change in
+            self?.playStatusChanged()
+        }
+
+        playerItemStatusToken = player.observe(\.currentItem?.status, options: [.new]) { [weak self] player, change in
+            self?.playStatusChanged()
+        }
+
         if let currentItem = player.currentItem {
             NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidPlayToEndTime(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: currentItem)
         }
@@ -408,9 +412,9 @@ extension Player {
     
     private func stopObserving(player: AVPlayer) {
         guard isObserving else { return }
-        
-        player.removeObserver(self, forKeyPath: Constant.playerStatusKey, context: &Constant.playerStatus)
-        player.removeObserver(self, forKeyPath: Constant.playerItemStatusKey, context: &Constant.playerItemStatus)
+
+        playerStatusToken?.invalidate()
+        playerItemStatusToken?.invalidate()
         
         if let currentItem = player.currentItem {
             NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: currentItem)
@@ -456,28 +460,18 @@ extension Player {
         status = .playToEndTime
         delegate?.player(self, playerViewDidPlayToEndTime: playerView)
     }
-    
-    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        
-        guard let context = context else { return }
-        
-        switch context {
-            
-        case &Constant.playerStatus, &Constant.playerItemStatus:
 
-            guard let playerItem = player.currentItem else { return }
-            
-            if case .readyToPlay = playerItem.status, case .readyToPlay = player.status {
-                status = .unknown
-            } else if case .failed = playerItem.status {
-                status = .unknown
-                delegate?.player(self, playerView: playerView, didFailWith: playerItem.error ?? player.error)
-            } else if case .unknown = player.status {
-                status = .unknown
-            }
-            
-        default:
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+    private func playStatusChanged() {
+
+        guard let playerItem = player.currentItem else { return }
+
+        if case .readyToPlay = playerItem.status, case .readyToPlay = player.status {
+            status = .readyToPlay
+        } else if case .failed = playerItem.status {
+            status = .failed
+            delegate?.player(self, playerView: playerView, didFailWith: playerItem.error ?? player.error)
+        } else if case .unknown = player.status {
+            status = .unknown
         }
     }
 }
@@ -531,7 +525,7 @@ extension Player {
 
         let itemTime = videoOutput.itemTime(forHostTime: time)
 
-        var presentationItemTime = kCMTimeZero
+        var presentationItemTime = CMTime.zero
 
         guard videoOutput.hasNewPixelBuffer(forItemTime: itemTime), let pixelBuffer = videoOutput.copyPixelBuffer(forItemTime: itemTime, itemTimeForDisplay: &presentationItemTime)  else {
 
