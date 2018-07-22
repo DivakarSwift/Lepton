@@ -18,46 +18,9 @@ public enum RenderMode {
 
 public protocol Renderer {
 
-    var renderMode: RenderMode { get }
+    var inputPixelFormat: FourCharCode { get } // One of 420f, 420v, or BGRA
 
-    func setPreferredTransform(_ transform: CGAffineTransform)
+    func copyRenderedPixelBuffer(_ pixelBuffer: CVPixelBuffer) -> CVPixelBuffer
 
-    func display(pixelBuffer: CVPixelBuffer, atTime time: CMTime)
-
-    func copyRendered(pixelBuffer: CVPixelBuffer) -> CVPixelBuffer
-}
-
-extension Renderer {
-
-    public var renderMode: RenderMode {
-        return .aspectFit
-    }
-
-    public func resized(image: CIImage, to rect: CGRect, with mode: RenderMode) -> CIImage {
-
-        let imageSize = image.extent.size
-
-        var horizontalScale = rect.size.width / imageSize.width
-        var verticalScale = rect.size.height / imageSize.height
-
-        switch mode {
-        case .none:
-            return image
-        case .resize:
-            break
-        case .aspectFill:
-            horizontalScale = max(horizontalScale, verticalScale)
-            verticalScale = horizontalScale
-        case .aspectFit:
-            horizontalScale = min(horizontalScale, verticalScale)
-            verticalScale = horizontalScale
-        }
-
-        return image.transformed(by: CGAffineTransform(scaleX: horizontalScale, y: verticalScale))
-    }
-}
-
-public protocol FilterRenderer: Renderer {
-
-    var filter: FilterProtocol? { get set }
+    func reset()
 }
