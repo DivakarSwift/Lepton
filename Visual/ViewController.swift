@@ -81,7 +81,7 @@ class ViewController: UIViewController {
 
 extension ViewController: PlayerDelegate {
 
-    func player(_ player: Player, playerViewDidPlayToEndTime: PlayerView) {
+    func player(_ player: Player, playerViewDidReachEnd: PlayerView) {
         print(#function)
     }
 

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7870890B20D62B7B00927C77 /* PixelBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7870890A20D62B7B00927C77 /* PixelBuffer.swift */; };
+		7870890D20D6377100927C77 /* ShaderProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7870890C20D6377100927C77 /* ShaderProgram.swift */; };
 		7894722420C0374700E5ABBB /* PlayerTransitionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7894722320C0374700E5ABBB /* PlayerTransitionAnimation.swift */; };
 		78B1C82420B148A800C4BAB5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C82320B148A800C4BAB5 /* AppDelegate.swift */; };
 		78B1C82620B148A800C4BAB5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C82520B148A800C4BAB5 /* ViewController.swift */; };
@@ -37,6 +39,10 @@
 		78D5522D20BC1F5400866A40 /* InteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5522C20BC1F5400866A40 /* InteractiveTransition.swift */; };
 		78D5522F20BC23B600866A40 /* AnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D5522E20BC23B600866A40 /* AnimatedTransitioning.swift */; };
 		78EBE4E220C28C2000C33396 /* TransitionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EBE4E120C28C2000C33396 /* TransitionAnimation.swift */; };
+		78FE9FD820D5452500DE9B96 /* PixelBufferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE9FD720D5452500DE9B96 /* PixelBufferView.swift */; };
+		78FE9FDA20D54BFA00DE9B96 /* ViewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE9FD920D54BFA00DE9B96 /* ViewRenderer.swift */; };
+		78FE9FDD20D54CD200DE9B96 /* FilterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE9FDC20D54CD200DE9B96 /* FilterRenderer.swift */; };
+		78FE9FDF20D54CDD00DE9B96 /* OpenGLRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE9FDE20D54CDD00DE9B96 /* OpenGLRenderer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +91,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7870890A20D62B7B00927C77 /* PixelBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelBuffer.swift; sourceTree = "<group>"; };
+		7870890C20D6377100927C77 /* ShaderProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderProgram.swift; sourceTree = "<group>"; };
 		7894722320C0374700E5ABBB /* PlayerTransitionAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTransitionAnimation.swift; sourceTree = "<group>"; };
 		78B1C82020B148A800C4BAB5 /* Visual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Visual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78B1C82320B148A800C4BAB5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +128,10 @@
 		78D5522C20BC1F5400866A40 /* InteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveTransition.swift; sourceTree = "<group>"; };
 		78D5522E20BC23B600866A40 /* AnimatedTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedTransitioning.swift; sourceTree = "<group>"; };
 		78EBE4E120C28C2000C33396 /* TransitionAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAnimation.swift; sourceTree = "<group>"; };
+		78FE9FD720D5452500DE9B96 /* PixelBufferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelBufferView.swift; sourceTree = "<group>"; };
+		78FE9FD920D54BFA00DE9B96 /* ViewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRenderer.swift; sourceTree = "<group>"; };
+		78FE9FDC20D54CD200DE9B96 /* FilterRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRenderer.swift; sourceTree = "<group>"; };
+		78FE9FDE20D54CDD00DE9B96 /* OpenGLRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGLRenderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,12 +223,13 @@
 		78B1C84920B148ED00C4BAB5 /* Lepton */ = {
 			isa = PBXGroup;
 			children = (
+				78FE9FDB20D54CA400DE9B96 /* Renderer */,
 				78D5522520B958D800866A40 /* SampleBuffer */,
 				78D5521D20B9309800866A40 /* Filter */,
 				78B1C87420B1604100C4BAB5 /* Defaults.swift */,
 				78B1C87220B1600E00C4BAB5 /* DisplayLinkProxy.swift */,
 				78B1C87020B14A6800C4BAB5 /* PlayerItemProtocol.swift */,
-				78D5522320B9540B00866A40 /* Renderer.swift */,
+				78FE9FD920D54BFA00DE9B96 /* ViewRenderer.swift */,
 				78B1C86820B1499B00C4BAB5 /* Player.swift */,
 				78B1C86620B1499A00C4BAB5 /* PlayerItem.swift */,
 				78B1C87620B1690200C4BAB5 /* PlayerError.swift */,
@@ -257,8 +270,21 @@
 			isa = PBXGroup;
 			children = (
 				78B1C86720B1499B00C4BAB5 /* SampleBufferDisplayView.swift */,
+				78FE9FD720D5452500DE9B96 /* PixelBufferView.swift */,
 			);
 			path = SampleBuffer;
+			sourceTree = "<group>";
+		};
+		78FE9FDB20D54CA400DE9B96 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				78D5522320B9540B00866A40 /* Renderer.swift */,
+				78FE9FDC20D54CD200DE9B96 /* FilterRenderer.swift */,
+				78FE9FDE20D54CDD00DE9B96 /* OpenGLRenderer.swift */,
+				7870890A20D62B7B00927C77 /* PixelBuffer.swift */,
+				7870890C20D6377100927C77 /* ShaderProgram.swift */,
+			);
+			path = Renderer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -361,17 +387,20 @@
 				TargetAttributes = {
 					78B1C81F20B148A800C4BAB5 = {
 						CreatedOnToolsVersion = 9.3.1;
+						LastSwiftMigration = 1000;
 					};
 					78B1C83320B148A900C4BAB5 = {
 						CreatedOnToolsVersion = 9.3.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 78B1C81F20B148A800C4BAB5;
 					};
 					78B1C84720B148ED00C4BAB5 = {
 						CreatedOnToolsVersion = 9.3.1;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1000;
 					};
 					78B1C84F20B148EE00C4BAB5 = {
 						CreatedOnToolsVersion = 9.3.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 78B1C81F20B148A800C4BAB5;
 					};
 				};
@@ -461,17 +490,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78FE9FDD20D54CD200DE9B96 /* FilterRenderer.swift in Sources */,
+				78FE9FDA20D54BFA00DE9B96 /* ViewRenderer.swift in Sources */,
 				78B1C86D20B1499B00C4BAB5 /* Player.swift in Sources */,
 				78D5522220B946C400866A40 /* Filter.swift in Sources */,
+				78FE9FDF20D54CDD00DE9B96 /* OpenGLRenderer.swift in Sources */,
+				7870890D20D6377100927C77 /* ShaderProgram.swift in Sources */,
 				78B1C87120B14A6800C4BAB5 /* PlayerItemProtocol.swift in Sources */,
 				78B1C86B20B1499B00C4BAB5 /* PlayerItem.swift in Sources */,
 				78D5522420B9540B00866A40 /* Renderer.swift in Sources */,
+				7870890B20D62B7B00927C77 /* PixelBuffer.swift in Sources */,
 				78B1C87520B1604100C4BAB5 /* Defaults.swift in Sources */,
 				78B1C87720B1690200C4BAB5 /* PlayerError.swift in Sources */,
 				78B1C86C20B1499B00C4BAB5 /* SampleBufferDisplayView.swift in Sources */,
 				78D5521B20B92ECC00866A40 /* RenderContext.swift in Sources */,
 				78D5521920B92DFA00866A40 /* RenderView.swift in Sources */,
 				78B1C87320B1600E00C4BAB5 /* DisplayLinkProxy.swift in Sources */,
+				78FE9FD820D5452500DE9B96 /* PixelBufferView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,7 +692,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xspyhack.Visual;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -677,7 +712,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xspyhack.Visual;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -688,6 +723,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DJ5N6T769K;
 				INFOPLIST_FILE = VisualTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -696,7 +732,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xspyhack.VisualTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Visual.app/Visual";
 			};
@@ -708,6 +744,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DJ5N6T769K;
 				INFOPLIST_FILE = VisualTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -716,7 +753,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xspyhack.VisualTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Visual.app/Visual";
 			};
@@ -744,7 +781,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -772,7 +809,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xspyhack.Lepton;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -784,6 +821,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DJ5N6T769K;
 				INFOPLIST_FILE = LeptonTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -792,7 +830,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xspyhack.LeptonTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Visual.app/Visual";
 			};
@@ -803,6 +841,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DJ5N6T769K;
 				INFOPLIST_FILE = LeptonTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -811,7 +850,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xspyhack.LeptonTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Visual.app/Visual";
 			};
