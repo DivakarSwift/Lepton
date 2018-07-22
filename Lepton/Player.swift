@@ -10,10 +10,11 @@ import AVFoundation
 
 public enum PlayerStatus {
     case unknown
+    case buffering
     case readyToPlay
     case playing
     case paused
-    case playToEndTime
+    case reachedEnd
     case failed
 }
 
@@ -396,15 +397,15 @@ extension Player {
         guard !isObserving else { return }
 
         playerStatusToken = player.observe(\.status, options: [.new]) { [weak self] player, change in
-            self?.playStatusChanged()
+            self?.playbackStatusChanged()
         }
 
         playerItemStatusToken = player.observe(\.currentItem?.status, options: [.new]) { [weak self] player, change in
-            self?.playStatusChanged()
+            self?.playbackStatusChanged()
         }
 
         if let currentItem = player.currentItem {
-            NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidPlayToEndTime(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: currentItem)
+            NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: currentItem)
         }
         
         isObserving = true
@@ -456,12 +457,12 @@ extension Player {
     }
 
     @objc
-    private func playerItemDidPlayToEndTime(_ notification: Notification) {
-        status = .playToEndTime
-        delegate?.player(self, playerViewDidPlayToEndTime: playerView)
+    private func playerItemDidReachEnd(_ notification: Notification) {
+        status = .reachedEnd
+        delegate?.player(self, playerViewDidReachEnd: playerView)
     }
 
-    private func playStatusChanged() {
+    private func playbackStatusChanged() {
 
         guard let playerItem = player.currentItem else { return }
 
@@ -513,7 +514,7 @@ extension Player: DisplayLinkProtocol {
         // Calculate the nextVsync time which is when the screen will be refreshed next.
         let nextVSync = displayLink.timestamp + displayLink.duration
 
-        render(at: nextVSync)
+        render(atTime: nextVSync)
     }
 }
 
@@ -521,13 +522,14 @@ extension Player: DisplayLinkProtocol {
 
 extension Player {
 
-    private func render(at time: TimeInterval) {
+    private func render(atTime time: TimeInterval) {
 
         let itemTime = videoOutput.itemTime(forHostTime: time)
 
         var presentationItemTime = CMTime.zero
 
-        guard videoOutput.hasNewPixelBuffer(forItemTime: itemTime), let pixelBuffer = videoOutput.copyPixelBuffer(forItemTime: itemTime, itemTimeForDisplay: &presentationItemTime)  else {
+        guard videoOutput.hasNewPixelBuffer(forItemTime: itemTime),
+            let pixelBuffer = videoOutput.copyPixelBuffer(forItemTime: itemTime, itemTimeForDisplay: &presentationItemTime)  else {
 
             if displayLink.timestamp - lastTimestamp > 0.5 {
                 displayLink.isPaused = true
@@ -558,5 +560,5 @@ public protocol PlayerDelegate : class {
     
     func player(_ player: Player, playerView: PlayerView, presentationSizeDidChange presentationSize: CGSize)
     
-    func player(_ player: Player, playerViewDidPlayToEndTime: PlayerView)
+    func player(_ player: Player, playerViewDidReachEnd: PlayerView)
 }
