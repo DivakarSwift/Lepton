@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import CoreImage
 
-public class RenderView: UIView, FilterRenderer {
+public class RenderView: UIView, FilterViewRenderer {
     
     public var filter: FilterProtocol?
 
@@ -46,6 +46,14 @@ public class RenderView: UIView, FilterRenderer {
         setNeedsDisplay()
     }
 
+    public func flush() {
+        //
+    }
+
+    public func reset() {
+        //
+    }
+
     public func setPreferredTransform(_ transform: CGAffineTransform) {
         preferredTransform = transform
     }
@@ -53,7 +61,7 @@ public class RenderView: UIView, FilterRenderer {
     override public func draw(_ rect: CGRect) {
         super.draw(rect)
 
-        guard let renderContext = renderContext, let image = renderredImage(in: rect) else {
+        guard let renderContext = renderContext, let image = renderedImage(in: rect) else {
             return
         }
 
@@ -81,7 +89,7 @@ public class RenderView: UIView, FilterRenderer {
         renderContext.context.draw(image, in: drawRect, from: image.extent)
     }
 
-    private func renderredImage(in rect: CGRect) -> CIImage? {
+    private func renderedImage(in rect: CGRect) -> CIImage? {
 
         guard let ciImage = ciImage else {
             return nil
