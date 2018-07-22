@@ -1,5 +1,5 @@
 //
-//  Previewer.swift
+//  ViewRenderer.swift
 //  Lepton
 //
 //  Created by bl4ckra1sond3tre on 2018/6/16.
@@ -8,20 +8,28 @@
 
 import CoreMedia
 
-public protocol Previewer {
+public protocol ViewRenderer {
 
+    /// display pixel buffer
     func display(pixelBuffer: CVPixelBuffer, atTime time: CMTime)
 
     /// flush pixel buffer cache
     func flush()
 
+    /// reset
     func reset()
+
+    func setPreferredTransform(_ transform: CGAffineTransform)
 }
 
-extension Previewer {
+extension ViewRenderer {
 
     public var renderMode: RenderMode {
         return .aspectFit
+    }
+
+    func setPreferredTransform(_ transform: CGAffineTransform) {
+        //
     }
 
     public func resized(image: CIImage, to rect: CGRect, with mode: RenderMode) -> CIImage {
@@ -46,4 +54,9 @@ extension Previewer {
 
         return image.transformed(by: CGAffineTransform(scaleX: horizontalScale, y: verticalScale))
     }
+}
+
+public protocol FilterViewRenderer: ViewRenderer {
+
+    var filter: FilterProtocol? { get set }
 }

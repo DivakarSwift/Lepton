@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-public class SampleBufferDisplayView: UIView, Renderer {
+public class SampleBufferDisplayView: UIView, ViewRenderer {
 
     var videoLayer: AVSampleBufferDisplayLayer {
         return layer as! AVSampleBufferDisplayLayer
@@ -25,10 +25,10 @@ public class SampleBufferDisplayView: UIView, Renderer {
 
         var err: OSStatus = noErr
 
-        if videoInfo == nil || !CMVideoFormatDescriptionMatchesImageBuffer(videoInfo!, pixelBuffer) {
+        if videoInfo == nil || !CMVideoFormatDescriptionMatchesImageBuffer(videoInfo!, imageBuffer: pixelBuffer) {
             videoInfo = nil
 
-            err = CMVideoFormatDescriptionCreateForImageBuffer(nil, pixelBuffer, &videoInfo)
+            err = CMVideoFormatDescriptionCreateForImageBuffer(allocator: nil, imageBuffer: pixelBuffer, formatDescriptionOut: &videoInfo)
             if (err != noErr) {
                 print("Error at CMVideoFormatDescriptionCreateForImageBuffer \(err)")
             }
@@ -38,10 +38,10 @@ public class SampleBufferDisplayView: UIView, Renderer {
             return
         }
 
-        var sampleTimingInfo = CMSampleTimingInfo(duration: kCMTimeInvalid, presentationTimeStamp: time, decodeTimeStamp: kCMTimeInvalid)
+        var sampleTimingInfo = CMSampleTimingInfo(duration: CMTime.invalid, presentationTimeStamp: time, decodeTimeStamp: CMTime.invalid)
         var sampleBuffer: CMSampleBuffer?
 
-        err = CMSampleBufferCreateForImageBuffer(nil, pixelBuffer, true, nil, nil, info, &sampleTimingInfo, &sampleBuffer)
+        err = CMSampleBufferCreateForImageBuffer(allocator: nil, imageBuffer: pixelBuffer, dataReady: true, makeDataReadyCallback: nil, refcon: nil, formatDescription: info, sampleTiming: &sampleTimingInfo, sampleBufferOut: &sampleBuffer)
         if (err != noErr) {
             print("Error at CMSampleBufferCreateForImageBuffer \(err)")
         }
@@ -51,6 +51,14 @@ public class SampleBufferDisplayView: UIView, Renderer {
         }
 
         videoLayer.enqueue(buffer)
+    }
+
+    public func flush() {
+        //
+    }
+
+    public func reset() {
+        //
     }
 
     public func setPreferredTransform(_ transform: CGAffineTransform) {

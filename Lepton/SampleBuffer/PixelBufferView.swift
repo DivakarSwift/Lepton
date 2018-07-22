@@ -6,4 +6,24 @@
 //  Copyright © 2018 blessingsoftware. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import CoreMedia
+
+public class PixelBufferView: UIView, ViewRenderer {
+
+    public func display(pixelBuffer: CVPixelBuffer, atTime time: CMTime) {
+
+    }
+
+    public func flush() {
+
+    }
+
+    public func reset() {
+        
+    }
+
+    public func setPreferredTransform(_ transform: CGAffineTransform) {
+        
+    }
+}
